@@ -12,10 +12,9 @@ const app = express();
 app.use(express.json()); // Pour traiter le JSON
 app.use(cors()); // Autoriser les requêtes Cross-Origin
 
-// Route de base pour tester le serveur
-app.get("/", (req, res) => {
-  res.send("API ConstructionXpert en cours de développement...");
-});
+// Routes
+import authRoutes from "./routes/authRoutes.js";
+app.use("/api/auth", authRoutes);
 
 // Lancer le serveur
 const PORT = process.env.PORT || 5000;
