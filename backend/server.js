@@ -25,6 +25,10 @@ app.use("/api/projects", projectRoutes);
 import taskRoutes from "./routes/taskRoutes.js";
 app.use("/api/tasks", taskRoutes);
 
+// Gestion des resources
+import resourceRoutes from "./routes/resourceRoutes.js";
+app.use("/api/resources", resourceRoutes);
+
 // Lancer le serveur
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}`));
