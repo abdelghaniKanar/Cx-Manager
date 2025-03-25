@@ -13,8 +13,13 @@ app.use(express.json()); // Pour traiter le JSON
 app.use(cors()); // Autoriser les requêtes Cross-Origin
 
 // Routes
+// Authentification
 import authRoutes from "./routes/authRoutes.js";
 app.use("/api/auth", authRoutes);
+
+// Gestion des projets
+import projectRoutes from "./routes/projectRoutes.js";
+app.use("/api/projects", projectRoutes);
 
 // Lancer le serveur
 const PORT = process.env.PORT || 5000;
