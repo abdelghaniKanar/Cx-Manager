@@ -11,7 +11,7 @@ const router = express.Router();
 
 // Routes pour la gestion des ressources
 router.get("/:taskId", protect, getResourcesByTask); // Récupérer les ressources d'une tâche
-router.post("/:taskId", protect, createResource); // Ajouter une ressource à une tâche
+router.post("/", protect, createResource); // Ajouter une ressource à une tâche
 router.put("/:id", protect, updateResource); // Modifier une ressource
 router.delete("/:id", protect, deleteResource); // Supprimer une ressource
 

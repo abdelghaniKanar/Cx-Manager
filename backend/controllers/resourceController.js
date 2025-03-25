@@ -18,11 +18,6 @@ export const getResourcesByTask = async (req, res) => {
 export const createResource = async (req, res) => {
   try {
     const { name, type, quantity, supplierId } = req.body;
-    const taskId = req.params.taskId;
-
-    // Vérifier si la tâche existe
-    const task = await Task.findById(taskId);
-    if (!task) return res.status(404).json({ message: "Tâche non trouvée" });
 
     // Vérifier si le fournisseur existe
     const supplier = await Supplier.findById(supplierId);
@@ -30,15 +25,16 @@ export const createResource = async (req, res) => {
       return res.status(404).json({ message: "Fournisseur non trouvé" });
 
     // Créer la ressource
-    const newResource = new Resource({ name, type, quantity });
+    const newResource = new Resource({
+      name,
+      type,
+      quantity,
+      supplier: supplierId,
+    });
 
     const savedResource = await newResource.save();
 
-    // Ajouter la ressource à la tâche
-    task.resources.push(savedResource._id);
-    await task.save();
-
-    // Ajouter la ressource à la liste des ressources du fournisseur
+    // Ajouter la ressource au fournisseur
     supplier.resources.push(savedResource._id);
     await supplier.save();
 
