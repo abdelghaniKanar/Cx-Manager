@@ -78,7 +78,7 @@ export const updateTask = async (req, res) => {
   }
 };
 
-// 📌 Supprimer une tâche
+// Supprimer une tâche
 export const deleteTask = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);

@@ -70,18 +70,16 @@ export const updateSupplier = async (req, res) => {
 export const deleteSupplier = async (req, res) => {
   try {
     const supplier = await Supplier.findById(req.params.id);
-
     if (!supplier)
       return res.status(404).json({ message: "Fournisseur non trouvé" });
 
-    // Supprimer toutes les ressources associées à ce fournisseur
-    await Resource.deleteMany({ _id: { $in: supplier.resources } });
+    // Supprimer toutes les ressources liées à ce fournisseur
+    await Resource.deleteMany({ supplier: supplier._id });
 
     // Supprimer le fournisseur
     await supplier.deleteOne();
-
     res.json({
-      message: "Fournisseur et ses ressources associées supprimés avec succès",
+      message: "Fournisseur et ses ressources supprimés avec succès",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

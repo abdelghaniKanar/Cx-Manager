@@ -76,11 +76,19 @@ export const updateProject = async (req, res) => {
 export const deleteProject = async (req, res) => {
   try {
     const project = await Project.findById(req.params.id);
-
     if (!project) return res.status(404).json({ message: "Projet non trouvé" });
 
+    // Récupérer toutes les tâches du projet
+    const tasks = await Task.find({ project: project._id });
+
+    // Supprimer toutes les tâches du projet
+    await Task.deleteMany({ project: project._id });
+
+    // Supprimer le projet
     await project.deleteOne();
-    res.json({ message: "Projet supprimé avec succès" });
+    res.json({
+      message: "Projet, ses tâches et ressources supprimés avec succès",
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
